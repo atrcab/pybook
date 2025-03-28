@@ -7,10 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
-
 import time
-
-#popup= self.driver.find_elements(By.CSS_SELECTOR, "div[data-testid='auth-link-in-view'] a")
 
 class AlojamientoPage(BasePage):
     def __init__(self, driver):
@@ -343,7 +340,7 @@ class AlojamientoPage(BasePage):
             button.click()
             location_element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "c944867a8c"))) 
             time.sleep(3)
-            
+
             assert location_element.is_displayed(), "Hotel location is not visible on the map."
             print("Clicked on 'Show on map' button successfully.")
             return True
