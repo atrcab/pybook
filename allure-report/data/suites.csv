@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","12406","Searching for a round-trip flight should enable return date selection","","Fri Mar 28 14:30:26 GMT-04:00 2025","broken","Fri Mar 28 14:30:39 GMT-04:00 2025","","","",""
+"","42678","Selecting departure & destination should display available flights","","Fri Mar 28 14:30:39 GMT-04:00 2025","failed","Fri Mar 28 14:31:22 GMT-04:00 2025","","","",""
+"","29505","Entering an invalid date range should trigger an error message","","Fri Mar 28 14:31:22 GMT-04:00 2025","passed","Fri Mar 28 14:31:51 GMT-04:00 2025","","","",""
+"","10808","Proceeding to checkout should display a booking summary","","Fri Mar 28 14:31:51 GMT-04:00 2025","broken","Fri Mar 28 14:32:02 GMT-04:00 2025","","","",""
