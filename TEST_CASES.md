@@ -61,6 +61,22 @@ Feature: Hotel Search & Filtering
     When I select the first hotel from the search results list
     Then I navigate to the hotel page and check its amenities
 
+  @hotel_search
+  Scenario: Verify that user reviews and ratings are displayed on the page
+    Given I am on the Booking.com homepage
+    When I enter "New York" as the destination
+    And I select "Hotels" as accommodation type
+    When I select the first hotel from the search results list
+    Then I navigate to the hotel page and check reviews and ratings
+
+  @hotel_search
+  Scenario: Check that a map showing the hotels location is present
+    Given I am on the Booking.com homepage
+    When I enter "New York" as the destination
+    And I select "Hotels" as accommodation type
+    When I select the first hotel from the search results list
+    And I navigate to the hotel page and check that the map is present
+
 Feature: Search and book a flight.
 
   Scenario: Searching for a round-trip flight should enable return date selection
