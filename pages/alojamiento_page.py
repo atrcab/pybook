@@ -6,6 +6,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.common.action_chains import ActionChains
+
 import time
 
 #popup= self.driver.find_elements(By.CSS_SELECTOR, "div[data-testid='auth-link-in-view'] a")
@@ -292,3 +294,61 @@ class AlojamientoPage(BasePage):
         except Exception as e:
             print(f"Facilities verification failed: {str(e)}")
             return False
+
+    def go_hotel_revsnrat(self):   
+        tabs = self.driver.window_handles
+        self.driver.switch_to.window(tabs[1])  
+        try:
+            # Wait for the review button using multiple XPath options
+            review_element = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((
+                    By.XPATH, "//button[contains(@data-testid, 'read-all-actionable')]"
+                ))
+            )
+
+            # Scroll to the element
+            ActionChains(self.driver).move_to_element(review_element).perform()
+
+            # Define multiple XPath options for extracting data
+            score_xpath = "//div[contains(@data-testid, 'review-score-component')]//div[contains(text(), 'Scored')]"
+            rating_xpath = "//div[contains(@data-testid, 'review-score-component')]//div[contains(text(), 'Rated')]"
+            num_reviews_xpath = "//div[contains(@data-testid, 'review-score-component')]//span[contains(text(), 'reviews')]"
+
+            # Extract data safely
+            score = self.driver.find_element(By.XPATH, score_xpath).text if self.driver.find_elements(By.XPATH, score_xpath) else "N/A"
+            rating = self.driver.find_element(By.XPATH, rating_xpath).text if self.driver.find_elements(By.XPATH, rating_xpath) else "N/A"
+            num_reviews = self.driver.find_element(By.XPATH, num_reviews_xpath).text if self.driver.find_elements(By.XPATH, num_reviews_xpath) else "N/A"
+
+            return {
+                "score": score,
+                "rating": rating,
+                "num_reviews": num_reviews
+            }
+        except Exception as e:
+            print(f"Error retrieving review data: {str(e)}")
+            return None
+        
+
+    def go_hotel_map(self):   
+        tabs = self.driver.window_handles
+        self.driver.switch_to.window(tabs[1])  
+        try:
+            # wait until show map
+            button = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "//button[@data-map-trigger-button='1']"))
+            )
+            # scroll to
+            self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", button)
+
+            button.click()
+            location_element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "c944867a8c"))) 
+            time.sleep(3)
+            
+            assert location_element.is_displayed(), "Hotel location is not visible on the map."
+            print("Clicked on 'Show on map' button successfully.")
+            return True
+        except Exception as e:
+            print(f"Error clicking 'Show on map' button: {str(e)}")
+            return False
+
+        

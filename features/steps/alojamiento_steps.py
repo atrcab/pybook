@@ -72,3 +72,15 @@ def step_impl(context):
 def step_impl(context):
     success = context.page.go_hotel_amenities()
     assert success is True
+
+@step('I navigate to the hotel page and check reviews and ratings')
+def step_impl(context):
+    success = context.page.go_hotel_revsnrat()
+    assert "score" in success, "Missing 'score' key in output"
+    assert "rating" in success, "Missing 'rating' key in output"
+    assert "num_reviews" in success, "Missing 'num_reviews' key in output"
+    
+@step('I navigate to the hotel page and check that the map is present')
+def step_impl(context):
+    success = context.page.go_hotel_map()
+    assert success is True
