@@ -12,7 +12,7 @@ def before_all(context):
 def after_all(context):
     pass
 
-def before_scenario(context, scenario):
+def before_feature(context, feature):
     try:
         driver_path = ChromeDriverManager().install()
         if "THIRD_PARTY_NOTICES" in driver_path:
@@ -30,9 +30,16 @@ def before_scenario(context, scenario):
         context.page = AlojamientoPage(context.driver)
         context.assertions = CustomAssertions()
     except Exception as e:
-        print(f"Error setting up driver for scenario {scenario.name}: {str(e)}")
+        print(f"Error setting up driver for scenario {feature.name}: {str(e)}")
         raise
 
-def after_scenario(context, scenario):
+def after_feature(context, feature):
     if hasattr(context, 'driver') and context.driver:
         context.driver.quit()
+
+def before_scenario(context, scenario):
+    pass
+
+
+def after_scenario(context, scenario):
+    pass
